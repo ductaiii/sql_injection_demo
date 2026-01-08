@@ -1,0 +1,7 @@
+.env
+.DS_Store
+Thumbs.db
+error_log
+*.log
+/vendor/
+/vscode/

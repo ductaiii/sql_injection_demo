@@ -40,7 +40,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `fullname`, `role`) VALUES
-(1, 'admin', 'password123', 'Quản trị viên', 'admin'),
+(1, 'admin', 'admin', 'Quản trị viên', 'admin'),
 (2, 'ductai', 'tai123456', 'Nguyễn Đức Tài', 'user'),
 (4, 'hoang_admin', 'passAdmin1', 'Lê Huy Hoàng', 'admin'),
 (5, 'phuong_admin', 'passAdmin2', 'Trần Thu Phương', 'admin'),

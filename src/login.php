@@ -10,12 +10,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username'])) {
     $username = $_GET['username'] ?? '';
     $password = $_GET['password'] ?? '';
 
-    // LỖI SQL INJECTION (Giữ lại để demo)
+    // Nỗi chuỗi trực tiếP -> SQl Injection
     $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $result = $conn->query($sql);
     $debug_sql = $sql;
 
+
+    // Dùng Prepared Statement
+    // $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    // $stmt = $conn->prepare($sql);
+    // $stmt->bind_param("ss", $username, $password);
+    // $stmt->execute();
+    // $result = $stmt->get_result();
+    // $debug_sql = $sql;
+
+
     try {
-        $result = $conn->query($sql);
+
 
         if ($result && $result->num_rows > 0) {
             $user = $result->fetch_assoc();
@@ -70,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username'])) {
             <input type="password" name="password" placeholder="Nhập password..." required>
         </div>
         <button type="submit">Đăng nhập</button>
+
     </form>
 
     <?php if ($debug_sql): ?>

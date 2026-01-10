@@ -12,19 +12,22 @@ This is a vulnerable-by-design PHP application for educational use to demonstrat
 
 ## Repository structure
 
-```
+```text
 sqli_demo/
 ├─ db/
-│  ├─ database.sql      # SQL schema and demo data
-│  └─ db.php            # DB connection helper (uses .env)
+│  └─ database.sql      # SQL schema and demo data
 ├─ src/
+│  ├─ index.php         # redirects "/" -> /login.php
 │  ├─ login.php         # Vulnerable login form (GET-based for demo)
 │  ├─ home.php          # Simple post-login page
-│  └─ .env              # local env (DB credentials) - may be moved to project root
+│  ├─ db.php            # DB connection helper (loads .env from src/)
+│  ├─ .env              # local env (DB credentials)
+│  ├─ .env.example      # example env (no secrets)
+│  └─ .gitignore
 └─ README.md
 ```
 
-Adjust paths in `db/db.php` or `.env` if you relocate files.
+Adjust paths in `src/db.php` or `.env` if you relocate files.
 
 ## Import the database (Windows / PowerShell)
 
@@ -59,7 +62,7 @@ cd src
 php -S 127.0.0.1:8000
 ```
 
-Then visit: http://127.0.0.1:8000/login.php
+Then visit: http://127.0.0.1:8000/ (the site redirects to `/login.php`)
 
 ## SQLMap (recommended source)
 

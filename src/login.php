@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username'])) {
     $username = $_GET['username'] ?? '';
     $password = $_GET['password'] ?? '';
 
-    // Nỗi chuỗi trực tiếP -> SQl Injection
+    // Direct string concatenation -> SQL Injection
     $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($sql);
     $debug_sql = $sql;
 
 
-    // Dùng Prepared Statement
+    // Prepared Statement -> SQL Injection Mitigation
     // $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     // $stmt = $conn->prepare($sql);
     // $stmt->bind_param("ss", $username, $password);

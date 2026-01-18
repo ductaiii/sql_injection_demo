@@ -1,10 +1,15 @@
 <?php
+session_set_cookie_params([
+	'httponly' => true
+]);
+
 session_start();
 require 'db.php';
 
 // Ensure user is logged in in this demo
 if (!isset($_SESSION['user'])) {
-	$welcome = '<a href="login.php">Đăng nhập</a> để xem danh sách.';
+	header('Location: login.php');
+	exit();
 } else {
 	$welcome = 'Xin chào, ' . htmlspecialchars($_SESSION['user']['fullname']);
 }
@@ -40,7 +45,7 @@ $query = $_GET['query'] ?? '';
 	<header>
 		<div style="max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
 			<div>
-				<h2 style="margin:0">User Directory</h2>
+				<h2 style="margin:0"><a href="home.php" style="text-decoration:none; color:white;">Home</a></h2>
 				<div style="font-size:13px;opacity:0.9"><?php echo $welcome; ?></div>
 			</div>
 			<div>
@@ -54,11 +59,17 @@ $query = $_GET['query'] ?? '';
 			<input type="text" name="query" placeholder="Tìm theo họ tên hoặc username..." value="<?php echo htmlspecialchars($query); ?>">
 			<button type="submit">Tìm</button>
 		</form>
-
-		<div class="note">Kết quả tìm kiếm. Nếu bạn là <strong>admin</strong> sẽ thấy đầy đủ thông tin; nếu là <strong>user</strong> chỉ thấy thông tin cơ bản.</div>
-
-
+										<!-- 🔍 Kết quả cho: ' .htmlspecialchars($query) . ' -->
 		<?php
+		if ($query !== '') {
+			// Demo XSS: Echo direct query without sanitization
+				echo
+				'<div style="padding: 12px 15px; background-color: #e3f2fd; color: #0d47a1; border-radius: 6px; margin-bottom: 20px; border-left: 5px solid #2196f3; font-weight: 500;">
+								🔍 Kết quả cho: ' .$query . '
+
+				</div>';
+		}
+
 		// Build query depending on search term
 		if ($query !== '') {
 			// Vulnerable pattern kept for demo clarity (original project was vulnerable)
